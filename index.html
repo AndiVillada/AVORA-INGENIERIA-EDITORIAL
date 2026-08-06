@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Las Mil y Una Noches</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italianno&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="fondo-papel"></div>
+
+  <!-- =================== PORTADA =================== -->
+  <section id="portada" role="banner" aria-label="Portada de Las Mil y Una Noches">
+    <!-- Capas de fondo -->
+    <div class="portada-bg"></div>
+    <div class="portada-nebulosa" aria-hidden="true"></div>
+
+    <!-- Texto superior -->
+    <div class="portada-texto">
+      <span class="portada-pretitle">Clásicos de la Literatura Universal</span>
+      <h1 class="portada-titulo">Las Mil y Una<br>Noches</h1>
+      <div class="portada-linea" aria-hidden="true"></div>
+      <span class="portada-subtitulo">Traducción de Vicente Blasco Ibáñez</span>
+    </div>
+
+    <!-- Escena ilustrada: estrellas + partículas JS + luna + palacio + arco -->
+    <div class="portada-escena" aria-hidden="true">
+      <img src="./image/estrellas_estrellas.svg" class="portada-estrellas" alt="">
+      <img src="./image/luna.svg"    class="portada-luna"    alt="">
+      <img src="./image/palacio.svg" class="portada-palacio" alt="">
+      <img src="./image/arco.svg"    class="portada-arco"    alt="">
+    </div>
+
+    <!-- Botón de entrada -->
+    <button id="btn-entrar" class="portada-btn" aria-label="Comenzar la lectura">
+      ✦ &nbsp; Comenzar lectura &nbsp; ✦
+    </button>
+  </section>
+
+  <!-- =================== LIBRO =================== -->
+  <div id="libro">
+
+    <!-- El marcapáginas se mueve al interior de .nav-inferior (ver abajo) -->
+
+    <!-- Player de música flotante -->
+    <div id="musica-player" hidden role="complementary" aria-label="Reproductor de música">
+      <div class="mp-inner">
+        <span class="mp-titulo">Noches de Arabia</span>
+        <div class="mp-controles">
+          <button id="mp-play"   class="mp-btn" aria-label="Reproducir">▶</button>
+          <div class="mp-barra-vol" title="Volumen">
+            <input id="mp-vol" type="range" min="0" max="100" value="40"
+                   aria-label="Volumen" class="mp-slider">
+          </div>
+          <button id="mp-cerrar" class="mp-btn mp-cerrar" aria-label="Cerrar reproductor">✕</button>
+        </div>
+        <div class="mp-ondas" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra controles superior -->
+    <header class="barra-controles" role="toolbar" aria-label="Controles de lectura">
+      <div class="controles-grupo" aria-label="Tamaño de texto">
+        <button id="btn-txt-menos" class="ctrl-btn" title="Reducir texto" aria-label="Reducir texto">A−</button>
+        <button id="btn-txt-mas"   class="ctrl-btn" title="Aumentar texto" aria-label="Aumentar texto">A+</button>
+      </div>
+
+      <!-- Paleta de resaltadores -->
+      <div class="controles-grupo resaltador-paleta" role="group" aria-label="Resaltador de texto">
+        <button class="resaltador-btn" data-color="amarillo"  aria-label="Resaltador amarillo"  title="Amarillo"  aria-pressed="false"></button>
+        <button class="resaltador-btn" data-color="verde"     aria-label="Resaltador verde"     title="Verde"     aria-pressed="false"></button>
+        <button class="resaltador-btn" data-color="rosa"      aria-label="Resaltador rosa"       title="Rosa"      aria-pressed="false"></button>
+        <button class="resaltador-btn" data-color="celeste"   aria-label="Resaltador celeste"   title="Celeste"   aria-pressed="false"></button>
+        <button class="resaltador-btn" data-color="naranja"   aria-label="Resaltador naranja"   title="Naranja"   aria-pressed="false"></button>
+        <button id="btn-borrador" class="resaltador-btn borrador" aria-label="Borrar resaltado" title="Borrador" aria-pressed="false">✕</button>
+      </div>
+
+      <span class="titulo-barra">Las Mil y Una Noches</span>
+
+      <div class="controles-grupo">
+        <button id="btn-musica" class="ctrl-btn btn-musica" aria-label="Activar música de lectura" title="Música" aria-pressed="false">
+          <span aria-hidden="true">♪</span>
+        </button>
+        <button id="btn-portada" class="ctrl-btn" aria-label="Volver a portada" title="Volver a portada">⌂</button>
+        <button id="btn-dark" class="ctrl-btn" aria-label="Activar modo oscuro" aria-pressed="false" title="Cambiar tema"><span aria-hidden="true">☾</span></button>
+      </div>
+    </header>
+
+    <!-- Páginas -->
+    <main id="paginas-wrapper" role="main">
+
+      <!-- PÁGINA 1 -->
+      <article class="pagina" data-pagina="1" role="article">
+        <h2>Las Mil y Una<br>Noches</h2>
+        <h3 class="Subtitulo-Obra">Historia del Rey Schahriar y de su hermano<br>el Rey Schahzaman</h3>
+        <p class="First_paragraph">Cuéntase —pero Alah es más sabio, más prudente, más poderoso y más
+          benéfico— que en lo que transcurrió en la antigüedad del tiempo y en lo pasado de la edad, hubo un rey
+          entre los reyes de Sassan, en las islas de la India y de la China<button class="sup" data-nota="n1" aria-label="Ver nota 1" aria-haspopup="dialog">¹</button>.
+          Era dueño de ejércitos y señor de auxiliares, de servidores y de un séquito numeroso. Tenía dos hijos,
+          y ambos eran heroicos jinetes, pero el mayor valía más aún que el menor. El mayor reinó en los países,
+          gobernó con justicia entre los hombres, y por eso le querían los habitantes del país y del reino.
+          Llamábase el rey Schahriar<button class="sup" data-nota="n2" aria-label="Ver nota 2" aria-haspopup="dialog">²</button>.
+          Su hermano, llamado Schahzaman<button class="sup" data-nota="n3" aria-label="Ver nota 3" aria-haspopup="dialog">³</button>, era el rey de Samarcanda Al-Ajam.</p>
+        <p>Siguiendo las cosas el mismo curso, residieron cada uno en su país, y gobernaron con justicia a
+          sus ovejas durante veinte años. Y llegaron ambos hasta el límite del desarrollo y el florecimiento.</p>
+        <p>No dejaron de ser así, hasta que el mayor sintió vehementes deseos de ver a su hermano.
+          Entonces ordenó a su visir que partiese y volviese con él. El visir contestó: «Escucho y obedezco».</p>
+        <p>Partió, pues, y llegó felizmente por la gracia de Alah; entró en casa de Schahzaman, le
+          transmitió la paz<button class="sup" data-nota="n4" aria-label="Ver nota 4" aria-haspopup="dialog">⁴</button>, le dijo que el rey Schahriar deseaba ardientemente verle,
+          y que el objeto de su viaje era invitarle a visitar a su hermano. El rey Schahzaman contestó:
+          «Escucho y obedezco». Dispuso los preparativos de la partida, mandando sacar las tiendas,
+          sus camellos y sus mulos, y que saliesen sus servidores y sus auxiliares. Nombró a su visir
+          gobernador del reino, y salió en demanda de las comarcas de su hermano.</p>
+      </article>
+
+      <!-- PÁGINA 2 -->
+      <article class="pagina" data-pagina="2" role="article" id="pagina-2">
+        <p>Pero a medianoche recordó una cosa que había olvidado; volvió a su palacio apresuradamente,
+          y encontró a su esposa tendida en el lecho abrazada con un negro, esclavo entre los esclavos.
+          Al ver tal cosa, el mundo se oscureció ante sus ojos. Y se dijo: «Si ha sobrevenido tal aventura
+          cuando apenas acabo de dejar la ciudad, ¿cuál sería la conducta de esta libertina si me ausentase
+          algún tiempo para estar con mi hermano?» Desenvainó inmediatamente el alfanje, y acometiendo a
+          ambos, les dejó muertos sobre los tapices del lecho. Volvió a salir, sin perder una hora ni un
+          instante, y ordenó la marcha de la comitiva. Y viajó de noche, hasta avistar la ciudad de su hermano.</p>
+        <p>Entonces éste se alegró de su proximidad, salió a su encuentro, y al recibirlo, le deseó la paz.
+          Se regocijó hasta los mayores límites del contento, mandó adornar en honor suyo la ciudad, y se
+          puso a hablarle lleno de efusión. Pero el rey Schahzaman recordaba la aventura de su esposa, y una
+          nube de tristeza le velaba la faz. Su tez se había puesto pálida y su cuerpo se había debilitado.
+          Al verle de tal modo, el rey Schahriar creyó en su alma que aquello se debía a haberse alejado de
+          su reino y de su país, y lo dejaba estar sin preguntarle nada. Al fin, un día, le dijo:
+          «Hermano, tu cuerpo enflaquece y tu cara amarillea». Y el otro respondió: «¡Ay, hermano, tengo
+          en mi interior como una llaga en carne viva!» Pero no le reveló lo que le había ocurrido con su
+          esposa. El rey Schahriar le dijo: «Quisiera que me acompañases a cazar a pie y a caballo, pues
+          así tal vez se esparciera tu espíritu». El rey Schahzaman no quiso aceptar, y su hermano se fué
+          solo a la cacería.</p>
+        <p>Había en el palacio unas ventanas que daban al jardín, y habiéndose asomado a una de ellas
+          el rey Schahzaman, vió cómo se abría una puerta para dar salida a veinte esclavas y veinte
+          esclavos, entre los cuales avanzaba la mujer del rey Schahriar en todo el esplendor de su
+          belleza. Llegados a un estanque, se desnudaron y se mezclaron todos.</p>
+      </article>
+
+      <!-- PÁGINA 3 -->
+      <article class="pagina" data-pagina="3" role="article">
+        <p>Al ver aquello, pensó el hermano del rey: «¡Por Alah! Más ligera es mi calamidad que esta otra».
+          Inmediatamente, dejando que se desvaneciese su aflicción, se dijo: «¡En verdad, esto es más enorme
+          que cuanto me ocurrió a mí!» Y desde aquel momento volvió a comer y beber cuanto pudo.</p>
+        <p>A todo esto, el rey, su hermano, volvió de su excursión, y ambos se desearon la paz íntimamente.
+          Luego el rey Schahriar observó que su hermano el rey Schahzaman acababa de recobrar el buen color,
+          pues su semblante había adquirido nueva vida, y advirtió también que comía con toda su alma después
+          de haberse alimentado parcamente en los primeros días. Se asombró de ello, y dijo: «Hermano, poco
+          ha te veía amarillo de tez y ahora has recuperado los colores. Cuéntame qué te pasa». El rey le dijo:
+          «Te contaré la causa de mi anterior palidez, pero dispénsame de referirte el motivo de haber
+          recobrado los colores». El rey replicó: «Para entendernos, relata primeramente la causa de tu pérdida
+          de color y tu debilidad». Y se explicó así: «Sabrás, hermano, que cuando enviaste tu visir para
+          requerir mi presencia, hice mis preparativos de marcha, y salí de la ciudad. Pero después me acordé
+          de la joya que te destinaba y que te di al llegar a tu palacio. Volví, pues, y encontré a mi mujer
+          acostada con un esclavo negro, durmiendo en los tapices de mi cama. Los maté a los dos, y vine hacia
+          ti, muy atormentado por el recuerdo de tal aventura. Este fué el motivo de mi primera palidez y de
+          mi enflaquecimiento. En cuanto a la causa de haber recobrado mi buen color, dispénsame de mencionarla».</p>
+        <p>Cuando su hermano oyó estas palabras, le dijo: «Por Alah te conjuro a que me cuentes la causa de
+          haber recobrado tus colores». Entonces el rey Schahzaman le refirió cuanto había visto. Y el rey
+          Schahriar dijo: «Ante todo, es necesario que mis ojos vean semejante cosa». Su hermano le respondió:
+          «Finge que vas de caza, pero escóndete en mis aposentos, y serás testigo del espectáculo».</p>
+      </article>
+
+      <!-- PÁGINA 4 — con animación de humo y fuego interactivo -->
+      <article class="pagina" data-pagina="4" role="article" id="pagina-efrit">
+        <!-- Canvas de humo: vive detrás del texto, pointer-events:none -->
+        <canvas id="canvas-humo" aria-hidden="true" tabindex="-1"></canvas>
+
+        <p>Inmediatamente, el rey mandó que el pregonero divulgase la orden de marcha. Los soldados salieron
+          con sus tiendas fuera de la ciudad. El rey marchó también, se ocultó en su tienda y dijo a sus
+          jóvenes esclavos: «¡Que nadie entre!» Luego se disfrazó, salió a hurtadillas y se dirigió al
+          palacio. Llegó a los aposentos de su hermano, y se asomó a la ventana que daba al jardín. Apenas
+          había pasado una hora, cuando salieron las esclavas, rodeando a su señora, y tras ellas los
+          esclavos. E hicieron cuanto había contado Schahzaman, pasando en tales juegos hasta el
+          asr<button class="sup" data-nota="n5" aria-label="Ver nota 5" aria-haspopup="dialog">⁵</button>.</p>
+        <p>Cuando vió estas cosas el rey Schahriar, la razón se ausentó de su cabeza, y dijo a su hermano:
+          «Marchemos para saber cuál es nuestro destino en el camino de Alah, porque nada de común debemos
+          tener con la realeza hasta encontrar a alguien que haya sufrido una aventura semejante a la nuestra.
+          Si no, la muerte sería preferible a nuestra vida». Su hermano le contestó lo que era apropiado,
+          y ambos salieron por una puerta secreta del palacio. Y no cesaron de caminar día y noche, hasta
+          que por fin llegaron a un árbol, en medio de una solitaria pradera, junto al mar salado. En aquella
+          pradera había un manantial de agua dulce. Bebieron de ella y se sentaron a descansar.</p>
+        <p>Apenas había transcurrido una hora del día, cuando el mar empezó a agitarse. De pronto brotó de
+          él una negra columna de humo, que llegó hasta el cielo y se dirigió después hacia la pradera. Los
+          reyes, asustados, se subieron a la cima del árbol, que era muy alto, y se pusieron a mirar lo que
+          tal cosa pudiera ser. Y he aquí que la columna de humo se convirtió en un Efrit<button class="sup" data-nota="n6" aria-label="Ver nota 6" aria-haspopup="dialog">⁶</button>
+          de elevada estatura, poderoso de hombros y robusto de pecho. Llevaba un arca sobre la cabeza. Puso
+          el pie en el suelo, y se dirigió hacia el árbol y se sentó debajo de él. Levantó entonces la tapa
+          del arca, sacó de ella una caja, la abrió, y apareció en seguida una encantadora joven, de
+          espléndida hermosura, luminosa lo mismo que el sol, como dijo el poeta:</p>
+
+        <!-- Blockquote con fuego interactivo -->
+        <div class="fuego-wrapper" aria-label="Cita con efecto de fuego interactivo. Mueve el cursor sobre el texto.">
+          <canvas id="canvas-fuego" aria-hidden="true"></canvas>
+          <blockquote class="Cita-Bando fuego-cita">
+            <p>¡Antorcha en las tinieblas, ella aparece y es el día! ¡Ella aparece y con su luz se iluminan
+              las auroras! ¡Los soles irradian con su claridad y las lunas con las sonrisas de sus ojos!
+              ¡Que los velos de su misterio se rasguen, e inmediatamente las criaturas se prosternan
+              encantadas a sus pies! ¡Y ante los dulces relámpagos de su mirada, el rocío de las lágrimas
+              de pasión humedece todos los párpados!</p>
+          </blockquote>
+          <p class="fuego-hint" aria-hidden="true">✦ pasa el dedo por el texto ✦</p>
+        </div>
+      </article>
+
+      <!-- PÁGINA 5 -->
+      <article class="pagina" data-pagina="5" role="article" id="pagina-5">
+        <p>Después que el efrit hubo contemplado a la hermosa joven, le dijo: «¡Oh soberana de las sederías!
+          ¡Oh tú, a quien rapté el mismo día de tu boda! Quisiera dormir un poco». Y el efrit colocó la
+          cabeza en las rodillas de la joven y se durmió.</p>
+        <p>Entonces la joven levantó la cabeza hacia la copa del árbol y vió ocultos en las ramas a los dos
+          reyes. En seguida apartó de sus rodillas la cabeza del efrit, la puso en el suelo, y les dijo por
+          señas: «Bajad, y no tengáis miedo de este efrit». Por señas, le respondieron: «¡Por Alah sobre ti!
+          ¡Dispénsanos de lance tan peligroso!» Ella les dijo: «¡Por Alah sobre vosotros! Bajad en seguida,
+          si no queréis que avise al efrit, que os dará la peor muerte». Entonces, asustados, bajaron hasta
+          donde estaba ella.</p>
+        <p>La joven se levantó y les dijo: «Traspasadme con vuestra lanza de un golpe duro y violento; si
+          no, avisaré al efrit». Schahriar, movido de espanto, dijo a Schahzaman: «Hermano, sé el primero en
+          hacer lo que ésta manda». El otro repuso: «No lo haré sin que antes me des el ejemplo tú, que eres
+          mayor». Y ambos empezaron a invitarse mutuamente. Pero ella les dijo: «¿Para qué tanto guiñar los
+          ojos? Si no venís y me obedecéis, llamo inmediatamente al efrit». Entonces, por miedo al efrit
+          hicieron con ella lo que les había pedido. Cuando los hubo agotado, les dijo: «¡Qué expertos sois
+          los dos!» Sacó del bolsillo un saquito y del saquito un collar compuesto de quinientas setenta
+          sortijas con sellos, y les preguntó: «¿Sabéis lo que es esto?» Ellos contestaron: «No lo sabemos».</p>
+
+        <!-- ✦ INTERACCIÓN: El collar de 570 sortijas ✦ -->
+        <div class="collar-wrapper" role="region" aria-label="El collar de sortijas — interacción">
+          <p class="collar-intro">Toca cada anillo para añadirlo al collar de la joven</p>
+          <canvas id="canvas-collar" aria-label="Collar de 570 sortijas. Toca o haz clic en cada anillo para recogerlo."></canvas>
+          <div class="collar-contador" aria-live="polite" aria-atomic="true">
+            <span id="collar-num">0</span>
+            <span class="collar-de"> de 570 sortijas</span>
+          </div>
+          <p class="collar-hint" id="collar-hint" aria-hidden="true">✦ toca los anillos ✦</p>
+        </div>
+
+        <p>Entonces les explicó la joven: «Los dueños de estos anillos me han poseído todos junto a los
+          cuernos insensibles de este efrit. De suerte que me vais a dar vuestros anillos». Lo hicieron así,
+          sacándoselos de los dedos, y ella entonces les dijo: «Sabed que este efrit me robó la noche de mi
+          boda; me encerró en esa caja, metió la caja en el arca, le echó siete candados y la arrastró al
+          fondo del mar. Pero no sabía que cuando desea alguna cosa una mujer no hay quien la venza. Ya lo
+          dijo el poeta:</p>
+        <blockquote class="Cita-Bando">
+          <p>¡Amigo: no te fíes de la mujer; ríete de sus promesas!
+            ¡Prodigan amor falso cuando la perfidia las llena y forma como la trama de sus vestidos!
+            ¡Recuerda respetuosamente las palabras de Yusuf! ¡Y no olvides que Eblis hizo que expulsaran
+            a Adán por causa de la mujer!</p>
+        </blockquote>
+      </article>
+
+      <!-- PÁGINA 6 -->
+      <article class="pagina" data-pagina="6" role="article">
+        <p>Los dos hermanos, al oir estas palabras, se maravillaron hasta más no poder y se dijeron uno a
+          otro: «Si éste es un efrit, y a pesar de su poderío le han ocurrido cosas más enormes que a
+          nosotros, esta aventura debe consolarnos». Inmediatamente se despidieron de la joven y regresaron
+          cada uno a su ciudad.</p>
+        <p>En cuanto el rey Schahriar entró en su palacio, mandó degollar a su esposa, así como a los
+          esclavos y esclavas. Después ordenó a su visir que cada noche le llevase una joven que fuese
+          virgen. Y cada noche arrebataba a una su virginidad. Y cuando la noche había transcurrido mandaba
+          que la matasen. Así estuvo haciendo durante tres años, y todo eran lamentos y voces de horror.
+          Los hombres huían con las hijas que les quedaban. En la ciudad no había ya ninguna doncella que
+          pudiese servir para los asaltos de este cabalgador.</p>
+        <p>En esta situación, el rey mandó al visir que, como de costumbre, le trajese una joven. El visir,
+          por más que buscó, no pudo encontrar ninguna, y regresó muy triste a su casa, con el alma transida
+          de miedo ante el furor del rey. Pero este visir tenía dos hijas de gran hermosura, que poseían
+          todos los encantos, todas las perfecciones y eran de una delicadeza exquisita. La mayor se llamaba
+          Schahrazada, y el nombre de la menor era Doniazada<button class="sup" data-nota="n7" aria-label="Ver nota 7" aria-haspopup="dialog">⁷</button>.</p>
+        <p>La mayor, Schahrazada, había leído los libros, los anales, las leyendas de los reyes antiguos
+          y las historias de los pueblos pasados. Dicen que poseía también mil libros de crónicas referentes
+          a los pueblos de las edades remotas, a los reyes de la antigüedad y sus poetas. Y era muy elocuente
+          y daba gusto oirla.</p>
+      </article>
+
+      <!-- PÁGINA 7 -->
+      <article class="pagina" data-pagina="7" role="article" id="pagina-7">
+        <p>Al ver a su padre, le habló así: «¿Por qué te veo tan cambiado, soportando un peso abrumador de
+          pesadumbres y aflicciones?... Sabe, padre, que el poeta dice: «¡Oh tú que te apenas, consuélate!...
+          Nada es duradero, toda alegría se desvanece y todo pesar se olvida».</p>
+        <p>Cuando oyó estas palabras el visir, contó a su hija cuanto había ocurrido, desde el principio al
+          fin, concerniente al rey. Entonces le dijo Schahrazada: «Por Alah, padre, cásame con el rey, porque
+          si no me mata, seré la causa del rescate de las hijas de los muslimanes y podré salvarlas de entre
+          las manos del rey.» Entonces el visir contestó: «¡Por Alah sobre ti! No te expongas nunca a tal
+          peligro». Pero Schahrazada repuso: «Es imprescindible que así lo haga». Entonces le dijo su padre:
+          «Cuidado no te ocurra lo que les ocurrió al asno y al buey con el labrador. Escucha su historia:</p>
+        <p class="Historia_Cuento"><span class="Cornisa">Fábula del asno,<br></span>el buey y el labrador</p>
+        <p>«Has de saber, hija mía, que hubo un comerciante dueño de grandes riquezas y de mucho ganado.
+          Estaba casado y con hijos. Alah, el Altísimo, le dió igualmente el conocimiento de los lenguajes
+          de los animales y el canto de los pájaros. Habitaba este comerciante en un país fértil, a orillas
+          de un río. En su morada había un asno y un buey.</p>
+        <p>Cierto día llegó el buey al lugar ocupado por el asno y vió aquel sitio barrido y regado. En el
+          pesebre había cebada y paja bien cribadas, y el jumento estaba echado, descansando. Ese día el
+          comerciante oyó que el buey decía al pollino: «Come a gusto y que te sea sano, de provecho y de
+          buena digestión. ¡Yo estoy rendido y tú descansado, después de comer cebada bien cribada! Si el
+          amo te monta alguna que otra vez, pronto vuelve a traerte. En cambio, yo me reviento arando y con
+          el trabajo del molino».</p>
+      </article>
+
+      <!-- PÁGINA 8 -->
+      <article class="pagina" data-pagina="8" role="article">
+        <p>El asno le aconsejó: «Cuando salgas al campo y te echen el yugo, túmbate y no te menees aunque
+          te den de palos. Y si te levantan, vuélvete a echar otra vez. Y si entonces te vuelven al establo
+          y te ponen habas, no las comas, fíngete enfermo. Haz por no comer ni beber en unos días, y de ese
+          modo descansarás de la fatiga del trabajo». Pero el comerciante seguía presente, oyendo todo lo
+          que hablaban.</p>
+        <p>Se acercó el mayoral al buey para darle forraje y le vió comer muy poca cosa. Por la mañana, al
+          llevarlo al trabajo, lo encontró enfermo. Entonces el amo dijo al mayoral: «Coge al asno y que are
+          todo el día en lugar del buey». Y el hombre unció al asno en vez del buey y le hizo arar todo el día.</p>
+        <p>Al anochecer, cuando el asno regresó al establo, el buey le dió las gracias por sus bondades, que
+          le habían proporcionado el descanso de todo el día; pero el asno no le contestó. Estaba muy arrepentido.</p>
+        <p>Al otro día el asno estuvo arando también durante toda la jornada y regresó con el pescuezo
+          desollado, rendido de fatiga. El buey, al verle en tal estado, le dió las gracias de nuevo y lo
+          colmó de alabanzas. El asno le dijo: «Bien tranquilo estaba yo antes. Ya ves cómo me ha perjudicado
+          el hacer beneficio a los demás». Y en seguida añadió: «Voy a darte un buen consejo de todos modos.
+          He oído decir al amo que te entregarán al matarife si no te levantas, y harán un tapete para la
+          mesa con tu piel. Te lo digo para que te salves».</p>
+        <p>El buey, cuando oyó estas palabras del asno, le dió las gracias nuevamente, y le dijo: «Mañana
+          reanudaré mi trabajo». Y se puso a comer, se tragó todo el forraje y hasta lamió el recipiente
+          con su lengua. Pero el amo les había oído hablar.</p>
+      </article>
+
+      <!-- PÁGINA 9 -->
+      <article class="pagina" data-pagina="9" role="article" id="pagina-9">
+        <p>En cuanto amaneció, fué con su esposa hacia el establo de los bueyes y las vacas, y se sentaron
+          a la puerta. Vino el mayoral y sacó al buey, que en cuanto vió a su amo empezó a menear la cola,
+          a ventosear ruidosamente y a galopar en todas direcciones como si estuviese loco. Entonces le
+          entró tal risa al comerciante, que se cayó de espaldas. Su mujer le preguntó: «¿De qué te ríes?»
+          Y él dijo: «De una cosa que he visto y oído; pero no la puedo descubrir porque me va en ello la vida».</p>
+        <p>La mujer insistió: «Pues has de contármela, aunque te cueste morir». Y él dijo: «Me callo, porque
+          temo a la muerte». Ella repuso: «Entonces es que te ríes de mí». Y desde aquel día no dejó de
+          hostigarle tenazmente, hasta que le puso en una gran perplejidad. Entonces el comerciante mandó
+          llamar a sus hijos, así como al kadí<button class="sup" data-nota="n8" aria-label="Ver nota 8" aria-haspopup="dialog">⁸</button> y a unos testigos. Quiso hacer testamento
+          antes de revelar el secreto a su mujer. Pero había allí un gallo lleno de vigor, capaz de dejar
+          satisfechas a cincuenta gallinas, y junto a él hallábase un perro. Y el comerciante oyó que el
+          perro increpaba al gallo: «¿No te avergüenza el estar tan alegre cuando va a morir nuestro amo?»</p>
+        <p>El gallo repuso: «¡Por Alah! Poco talento tiene nuestro amo. Cincuenta esposas tengo yo, y a
+          todas sé manejármelas perfectamente. El medio es bien sencillo: bastaría con cortar unas cuantas
+          varas de morera, entrar en el camarín de su esposa y darle hasta que sucumbiera o se arrepintiese».
+          Y cuando el comerciante oyó sus palabras se iluminó su razón, y resolvió dar una paliza a su mujer.</p>
+        <blockquote class="Cita-Bando">
+          <p>Entró el comerciante llevando ocultas las varas de morera que acababa de cortar, y llamó
+            aparte a su esposa. La mujer le siguió; el comerciante se encerró con ella y empezó a sacudirla
+            varazos, hasta que ella acabó por decir: «¡Me arrepiento, me arrepiento!» Y besaba las manos y
+            los pies de su marido. Estaba arrepentida de veras. Y todos vivieron muy felices hasta la muerte.</p>
+        </blockquote>
+        <p>Cuando Schahrazada, hija del visir, hubo oído este relato, insistió nuevamente en su ruego.
+          Entonces el visir mandó que preparasen el ajuar de su hija, y marchó a comunicar la nueva al rey
+          Schahriar. Mientras tanto, Schahrazada decía a su hermana Doniazada: «Te mandaré llamar cuando
+          esté en el palacio, y así que llegues y veas que el rey ha terminado su cosa conmigo, me dirás:
+          «Hermana, cuenta alguna historia maravillosa que nos haga pasar la noche». Entonces yo narraré
+          cuentos que, si quiere Alah, serán la causa de la emancipación de las hijas de los musulmanes».</p>
+        <p>Y Schahrazada, aquella primera noche, empezó su relato con la historia que sigue…</p>
+        <p class="Separator">✦ &nbsp; ✦ &nbsp; ✦</p>
+      </article>
+
+    </main>
+
+    <!-- Live region para lectores de pantalla -->
+    <div id="progreso-anuncio" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+    <!-- Nav inferior: Anterior | Marcapáginas + Progreso | Siguiente -->
+    <nav class="nav-inferior" role="navigation" aria-label="Navegación por páginas">
+
+      <button id="btn-prev" class="nav-btn"
+              aria-label="Ir a la página anterior"
+              aria-disabled="true"
+              disabled>&#10094; Anterior</button>
+
+      <!-- Grupo central: marcapáginas + barra progreso -->
+      <div class="progreso-wrapper">
+        <!-- Marcapáginas rediseñado como pastilla horizontal -->
+        <div id="marca-paginas" role="status" aria-label="Marcapáginas">
+          <!-- Ícono SVG decorativo -->
+          <span class="bm-icon" aria-hidden="true">
+            <svg viewBox="0 0 10 14" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0 h10 v14 l-5-3 -5 3 Z" fill="rgba(255,248,220,0.6)"/>
+            </svg>
+          </span>
+          <!-- Número de página actual -->
+          <span id="bm-num" class="bm-num" aria-hidden="true">1</span>
+          <!-- Separador -->
+          <span class="bm-sep" aria-hidden="true"></span>
+          <!-- Botón marcar leída -->
+          <button id="bm-btn" class="bm-btn"
+                  aria-label="Marcar página como leída"
+                  aria-pressed="false">✓</button>
+        </div>
+
+        <div class="progreso-barra" role="progressbar"
+             aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+             aria-label="Progreso de lectura">
+          <div class="progreso-fill" id="progreso-fill"></div>
+        </div>
+        <span class="progreso-texto" id="progreso-txt" aria-hidden="true">1 / 9</span>
+      </div>
+
+      <button id="btn-next" class="nav-btn"
+              aria-label="Ir a la página siguiente"
+              aria-disabled="false">Siguiente &#10095;</button>
+
+    </nav>
+
+    <!-- Tooltip de resaltado: aparece al seleccionar texto -->
+    <div id="resaltador-tooltip" role="dialog" aria-label="Opciones de resaltado" hidden>
+      <button class="rt-btn" data-color="amarillo" aria-label="Resaltar en amarillo"></button>
+      <button class="rt-btn" data-color="verde"    aria-label="Resaltar en verde"></button>
+      <button class="rt-btn" data-color="rosa"     aria-label="Resaltar en rosa"></button>
+      <button class="rt-btn" data-color="celeste"  aria-label="Resaltar en celeste"></button>
+      <button class="rt-btn" data-color="naranja"  aria-label="Resaltar en naranja"></button>
+      <div class="rt-sep" aria-hidden="true"></div>
+      <button class="rt-btn rt-borrar" id="rt-borrar" aria-label="Quitar resaltado">✕</button>
+    </div>
+
+  </div><!-- /libro -->
+
+  <!-- =================== NOTAS AL PIE =================== -->
+  <!-- Las notas viven aquí; el modal las muestra dinámicamente -->
+  <section id="notas-datos" aria-hidden="true" hidden>
+    <aside epub:type="footnote" id="n1">
+      <p><strong>1.</strong> El de Blasco Ibáñez es también absoluto: leer su traducción es como leer la de Mardrus.</p>
+    </aside>
+    <aside epub:type="footnote" id="n2">
+      <p><strong>2.</strong> Las traducciones inglesas de Payne y de Burton, que igualmente son integrales, aparecieron en «ediciones privadas» de doscientos o trescientos suscriptores y hace muchos años que no se encuentra un ejemplar. Una segunda edición de Burton se publicó algún tiempo después, pero considerablemente expurgada.</p>
+    </aside>
+    <aside epub:type="footnote" id="n3">
+      <p><strong>3.</strong> En el MOUROUF AL DAHAB OUA DJANHAR del historiador árabe Aboul Aassan Ali Al-Massoudi.</p>
+    </aside>
+    <aside epub:type="footnote" id="n4">
+      <p><strong>4.</strong> En el KITAB AL FIHRIST (año 987) de Mohamed ben Is'hak Al-Nadim.</p>
+    </aside>
+    <aside epub:type="footnote" id="n5">
+      <p><strong>5.</strong> La vaguedad de los nombres propios y de la geografía, en LAS MIL NOCHES Y UNA NOCHE, es cosa admirable. Sería, pues, inútil profundizar.</p>
+    </aside>
+    <aside epub:type="footnote" id="n6">
+      <p><strong>6.</strong> Dueño de la ciudad. Palabra persa.</p>
+    </aside>
+    <aside epub:type="footnote" id="n7">
+      <p><strong>7.</strong> Dueño del siglo o del tiempo. Palabra persa.</p>
+    </aside>
+    <aside epub:type="footnote" id="n8">
+      <p><strong>8.</strong> «Que la paz (o la salvación) sea contigo». Saludo usado entre los musulmanes.</p>
+    </aside>
+    <aside epub:type="footnote" id="n9">
+      <p><strong>9.</strong> Asr: parte del día en que empieza a declinar el sol.</p>
+    </aside>
+    <aside epub:type="footnote" id="n10">
+      <p><strong>10.</strong> Efrit: astuto, sinónimo de genio.</p>
+    </aside>
+  </section>
+
+  <!-- =================== MODAL NOTA =================== -->
+  <div id="modal-nota"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="modal-nota-titulo"
+       aria-describedby="modal-nota-cuerpo"
+       hidden>
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-caja" role="document">
+      <!-- Cabecera -->
+      <div class="modal-header">
+        <span class="modal-icono" aria-hidden="true">✦</span>
+        <span id="modal-nota-titulo" class="modal-titulo">Nota</span>
+        <button class="modal-cerrar"
+                id="modal-cerrar"
+                aria-label="Cerrar nota">✕</button>
+      </div>
+      <!-- Cuerpo -->
+      <div id="modal-nota-cuerpo" class="modal-cuerpo"></div>
+    </div>
+  </div>
+
+  <script src="./js/interacciones-libro.js" defer></script>
+  <script src="./js/animacion-efrit.js"     defer></script>
+  <script src="./js/resaltador.js"          defer></script>
+  <script src="./js/collar.js"              defer></script>
+  <script src="./js/musica.js"              defer></script>
+</body>
+</html>
